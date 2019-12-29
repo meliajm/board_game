@@ -13,9 +13,16 @@ class BoardGame::CLI
         input = nil
         while input != "exit"
             puts "options!!!"
+            input = gets.strip.downcase
 
+            if input.to_i > 0
+                puts @games[input.to_i-1]
+            elsif input == "list"
+                list_games
+            else
+                puts "Please enter a number, list, or exit"
+            end
         end
-
     end
 
 
