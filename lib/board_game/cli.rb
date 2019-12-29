@@ -6,6 +6,7 @@ class BoardGame::CLI
 
     def list_games
         puts "TOP 20 board games"
+        user_options
         @games = ["Scythe", "Cards Against Humanity", "7 Wonders"]
     end
 
