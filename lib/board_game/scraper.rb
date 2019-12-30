@@ -83,9 +83,6 @@ class BoardGame::Scraper
 end
 
 
-# BoardGame::Scraper.new
-
-
 #play with scraping lab to see how to get scraper "connected to" courses/games
 
 # doc = website

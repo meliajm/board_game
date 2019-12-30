@@ -1,3 +1,5 @@
+# to do - make more DRY, add mass assignment, add super/extend/include, add another class to interact with board_game
+
 class BoardGame::CLI
 
     def search_difficulity_players_age(diff="moderate", num=3, ages=10)

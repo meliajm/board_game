@@ -22,8 +22,8 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
-
+This Command Line Interface application scrapes board game data from https://www.gamesradar.com/best-board-games/
+and allows users to view the best board games and their stats, search by age, number of players, and difficulty.
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
