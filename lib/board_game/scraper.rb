@@ -1,4 +1,3 @@
-require 'pry'
 class BoardGame::Scraper
 
     def get_page
@@ -61,7 +60,7 @@ class BoardGame::Scraper
             if name == "Cosmic Encounter"
                 game.name = name
 
-            elsif i < 10 
+            elsif i < 8 
                 game.name = name[0...-1]
             else
                 game.name = name[0...-2]
@@ -81,19 +80,6 @@ class BoardGame::Scraper
             
         end    
     end
-
-    def print_games
-        self.make_games
-        BoardGame::Game.all.each do |game|
-          if game.name && game.name != ""
-            puts "Name: #{game.name}"
-            puts "Description: #{game.description}"
-          end
-        end
-      end
-
-
-
 end
 
 
@@ -138,3 +124,13 @@ end
 
 
         # game
+
+        # def print_games
+            #     self.make_games
+            #     BoardGame::Game.all.each do |game|
+            #       if game.name && game.name != ""
+            #         puts "Name: #{game.name}"
+            #         puts "Description: #{game.description}"
+            #       end
+            #     end
+            #   end
