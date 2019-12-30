@@ -1,5 +1,5 @@
 class BoardGame::Game 
-    attr_accessor :name, :number_of_player, :minimum_age, :difficulty, :description, :game_length, :setup_time
+    attr_accessor :name, :number_of_player, :minimum_age, :difficulty, :description, :game_length, :setup_time, array_num_player
 
     @@all = []
 
@@ -14,6 +14,10 @@ class BoardGame::Game
     def self.reset_all
         @@all.clear
     end
+
+    # def get_number_players_array
+    #     number_of_player
+    # end
 
 end
 

@@ -16,8 +16,6 @@ class BoardGame::Scraper
         all_descriptions = nil
         all_stats = nil
         self.get_games.each do |article|
-        # doc = Nokogiri::HTML(open("https://www.gamesradar.com/best-board-games/"))
-        # doc.css("#article-body").each do |article|
             all_names = article.css("h3").text
             all_descriptions = article.css("div._hawk.subtitle").text
             all_stats = article.css("p.specs__container").text
@@ -52,6 +50,12 @@ class BoardGame::Scraper
         time_set << "Time to set up: unknown"
         age << "Age: unknown"
 
+        # this array is correct accept gloomhaven should be 1-4 instead of 1, but that's fine for now
+        arr_play = []
+        players.each_with_index do |p, i|
+            arr_play << (players[i].delete_prefix("layers: ").split("-")[0].to_i..players[i].delete_prefix("layers: ").split("-")[-1].to_i).to_a
+        end
+
         all_names.each_with_index do |name, i|
             game = BoardGame::Game.new
             if name == "Cosmic Encounter"
@@ -62,11 +66,16 @@ class BoardGame::Scraper
             else
                 game.name = name[0...-2]
             end
+            
+
             game.description = "T#{all_descriptions[i]}"
             game.number_of_player = players[i] #.delete_prefix("layers: ")
+            players[i].delete_prefix("layers: ").split("-")
+            
+            game.array_num_player = arr_play[i]
             game.minimum_age = age[i] #.delete_prefix("Age: ").delete_suffix("+").to_i
             
-            game.difficulty = diff[i] #[12..-1]
+            game.difficulty = diff[i] 
             game.game_length = time_play[i] 
             game.setup_time = time_set[i]
             
