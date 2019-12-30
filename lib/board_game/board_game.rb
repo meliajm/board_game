@@ -1,6 +1,6 @@
 class BoardGame::Game 
-    # attr_accessor :name, :number_of_players, :game_length, :ages, :setup_time, :difficulty, :description, :all_stats
-    attr_accessor :name, :description
+    attr_accessor :name, :number_of_player, :minimum_age, :difficulty, :description, :game_length, :setup_time
+
     @@all = []
 
     def initialize

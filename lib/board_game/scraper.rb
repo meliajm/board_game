@@ -14,32 +14,63 @@ class BoardGame::Scraper
         #there is probably a better way to scrap this - this is how it's getting done for now
         all_names = nil
         all_descriptions = nil
+        all_stats = nil
         self.get_games.each do |article|
         # doc = Nokogiri::HTML(open("https://www.gamesradar.com/best-board-games/"))
         # doc.css("#article-body").each do |article|
             all_names = article.css("h3").text
             all_descriptions = article.css("div._hawk.subtitle").text
+            all_stats = article.css("p.specs__container").text
         end
-        
+        a = all_stats.split(" | ")
+        stats_array = []
+        a.each do |a|
+            if a.include?('P')
+                stats_array << a.split('P')
+            else 
+                stats_array << a
+            end
+        end
+        stats_array = stats_array.flatten
+        stats_array = stats_array.drop(1)
+        players = []
+        diff = []
+        time_set = []
+        time_play = []
+        age = []
+        stats_array.each {|s| players << s if s[0..5] == "layers" }
+        stats_array.each {|s| diff << s if s[0..5] == "Diffic" || s[0..5] == "Comple"}
+        stats_array.each {|s| time_set << s if s[8] == "s"}
+        stats_array.each {|s| time_play << s if s[8] == "p"}
+        stats_array.each {|s| age << s if s[0..2] == "Age"}
+        # binding.pry
         all_names = all_names.split('. ')
         all_names = all_names.drop(1)
-        
         all_descriptions = all_descriptions.split('T')
         all_descriptions = all_descriptions.drop(1)
-       
-        all_names.each.with_index(1) do |name, i|
-            game = BoardGame::Game.new
+        # just to even out age and time_set because there are only 19 elements in these arrays, these are not in order
+        time_set << "Time to set up: unknown"
+        age << "Age: unknown"
 
-            if i < 10 
+        all_names.each_with_index do |name, i|
+            game = BoardGame::Game.new
+            if name == "Cosmic Encounter"
+                game.name = name
+
+            elsif i < 10 
                 game.name = name[0...-1]
             else
                 game.name = name[0...-2]
             end
-            game.description = "T#{all_descriptions[i-1]}"
-        end
-
-    
-    
+            game.description = "T#{all_descriptions[i]}"
+            game.number_of_player = players[i] #.delete_prefix("layers: ")
+            game.minimum_age = age[i] #.delete_prefix("Age: ").delete_suffix("+").to_i
+            
+            game.difficulty = diff[i] #[12..-1]
+            game.game_length = time_play[i] 
+            game.setup_time = time_set[i]
+            
+        end    
     end
 
     def print_games
@@ -55,6 +86,7 @@ class BoardGame::Scraper
 
 
 end
+
 
 # BoardGame::Scraper.new
 
