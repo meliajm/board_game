@@ -40,7 +40,6 @@ class BoardGame::Scraper
         stats_array.each {|s| time_set << s if s[8] == "s"}
         stats_array.each {|s| time_play << s if s[8] == "p"}
         stats_array.each {|s| age << s if s[0..2] == "Age"}
-        # binding.pry
         all_names = all_names.split('. ')
         all_names = all_names.drop(1)
         all_descriptions = all_descriptions.split('T')
@@ -54,30 +53,22 @@ class BoardGame::Scraper
         players.each_with_index do |p, i|
             arr_play << (players[i].delete_prefix("layers: ").split("-")[0].to_i..players[i].delete_prefix("layers: ").split("-")[-1].to_i).to_a
         end
-
         all_names.each_with_index do |name, i|
             game = BoardGame::Game.new
             if name == "Cosmic Encounter"
                 game.name = name
-
             elsif i < 8 
                 game.name = name[0...-1]
             else
                 game.name = name[0...-2]
             end
-            
-
             game.description = "T#{all_descriptions[i]}"
-            game.number_of_player = players[i] #.delete_prefix("layers: ")
-            players[i].delete_prefix("layers: ").split("-")
-            
+            game.number_of_player = players[i]
             game.array_num_player = arr_play[i]
-            game.minimum_age = age[i] #.delete_prefix("Age: ").delete_suffix("+").to_i
-            
+            game.minimum_age = age[i] 
             game.difficulty = diff[i] 
             game.game_length = time_play[i] 
             game.setup_time = time_set[i]
-            
         end    
     end
 end

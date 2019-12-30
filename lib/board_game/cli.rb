@@ -1,15 +1,13 @@
-# to do - make more DRY, add super/extend/include, add another class to interact with board_game
-
+# blog
+# https://drive.google.com/open?id=15xG3RZ7WIPIsdY5GKoAsRrIl1kQrihpY
 class BoardGame::CLI
 
-    def search_difficulity_players_age(diff: "moderate", num: 3, ages: 10)
+    def search_difficulity_players_age(diff:, num:, ages:)
         array_games = []
-        # binding.pry
         @games = BoardGame::Game.all
         @games.each do |g|
             if g.array_num_player.include?(num) && g.difficulty.include?(diff.capitalize) && g.minimum_age.delete_prefix("Age: ").delete_suffix("+").to_i <= ages
                 array_games << g.name
-                
             end
         end
         array_games 

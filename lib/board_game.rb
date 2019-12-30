@@ -11,6 +11,7 @@ require_relative './board_game/scraper'
 
 
 
+
 module BoardGame
   class Error < StandardError; end
   # Your code goes here...
