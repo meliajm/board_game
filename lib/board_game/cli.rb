@@ -1,8 +1,8 @@
-# to do - make more DRY, add mass assignment, add super/extend/include, add another class to interact with board_game
+# to do - make more DRY, add super/extend/include, add another class to interact with board_game
 
 class BoardGame::CLI
 
-    def search_difficulity_players_age(diff="moderate", num=3, ages=10)
+    def search_difficulity_players_age(diff: "moderate", num: 3, ages: 10)
         array_games = []
         # binding.pry
         @games = BoardGame::Game.all
@@ -15,7 +15,7 @@ class BoardGame::CLI
         array_games 
     end
 
-    def search_number_players_array(num)
+    def search_number_players_array(num:)
         array_games = []
         @games = BoardGame::Game.all
         @games.each do |g|
@@ -26,7 +26,7 @@ class BoardGame::CLI
         array_games
     end
 
-    def search_difficulty(input)
+    def search_difficulty(input:)
         input = input.capitalize
         array_games = []
         @games = BoardGame::Game.all
@@ -82,12 +82,12 @@ class BoardGame::CLI
             elsif input == "play"
                 puts "Enter number of players, 1-20"
                 num = gets.strip.to_i
-                search = search_number_players_array(num)
+                search = search_number_players_array(num: num)
                 search.each { |game| puts game}
             elsif input == "diff"
                 puts "Enter easy, moderate, hard"
                 input = gets.strip
-                search = search_difficulty(input)
+                search = search_difficulty(input: input)
                 search.each { |game| puts game}
             elsif input == "search"
                 puts "Enter easy, moderate, hard"
@@ -97,7 +97,7 @@ class BoardGame::CLI
                 puts "Enter youngest player age"
                 input_age = gets.strip.to_i
                 puts ""
-                search = search_difficulity_players_age(input_diff, input_play, input_age)
+                search = search_difficulity_players_age(diff: input_diff, num: input_play, ages: input_age)
                 search.each { |game| puts game}
             elsif input == 'exit'
                 puts "See ya!"
