@@ -9,26 +9,65 @@ class BoardGame::Scraper
         self.get_page.css("#article-body")
     end
 
-
     def make_games
+         
+        #there is probably a better way to scrap this - this is how it's getting done for now
+        all_names = nil
+        all_descriptions = nil
         self.get_games.each do |article|
-            game = BoardGame::Game.new 
-            game.name = article.css("h3").text
-            game.description = article.css("div._hawk.subtitle").text 
+        # doc = Nokogiri::HTML(open("https://www.gamesradar.com/best-board-games/"))
+        # doc.css("#article-body").each do |article|
+            all_names = article.css("h3").text
+            all_descriptions = article.css("div._hawk.subtitle").text
+        end
+        
+        all_names = all_names.split('. ')
+        all_names = all_names.drop(1)
+        
+        all_descriptions = all_descriptions.split('T')
+        all_descriptions = all_descriptions.drop(1)
+       
+        all_names.each.with_index(1) do |name, i|
+            game = BoardGame::Game.new
+
+            if i < 10 
+                game.name = name[0...-1]
+            else
+                game.name = name[0...-2]
+            end
+            game.description = "T#{all_descriptions[i-1]}"
         end
 
-        # doc = website
+    
+    
+    end
+
+    def print_games
+        self.make_games
+        BoardGame::Game.all.each do |game|
+          if game.name && game.name != ""
+            puts "Name: #{game.name}"
+            puts "Description: #{game.description}"
+          end
+        end
+      end
+
+
+
+end
+
+# BoardGame::Scraper.new
+
+
+#play with scraping lab to see how to get scraper "connected to" courses/games
+
+# doc = website
         # doc.css("#article-body").each do |article_bod|
         #     game = BoardGame::Game.new
         #     game.name = article_bod.css("h3").text
         #     game.all_stats = doc.css("#article-body").first.css("p.specs__container").text
         #     game.descr = article_bod.css("div._hawk.subtitle").text
         # end
-    end
-end
-
-# BoardGame::Scraper.new
-
 
 # game.number_of_players = article-bod.css("#todays-deal span.price").text.strip
     # game.game_length = article-bod.css("a.wantone").first.attr("href").strip
