@@ -1,5 +1,5 @@
-# blog
 # https://drive.google.com/open?id=15xG3RZ7WIPIsdY5GKoAsRrIl1kQrihpY
+# https://meliajm.github.io/board_game_cli
 class BoardGame::CLI
 
     def search_difficulity_players_age(diff:, num:, ages:)
@@ -54,10 +54,10 @@ class BoardGame::CLI
         input = nil
         while input != "exit"
             puts ""
-            puts "Your options are list, exit, play for search by number of players, diff for search by number of players, search, or 1-20!!"
+            puts "Your options are list, exit, play for search by number of players, diff for search by difficulty, search, or 1-20!!"
             input = gets.strip.downcase
-
-            if input.to_i > 0
+            
+            if input.to_i > 0 && input.to_i < 21
                 input = input.to_i
                 puts ""
                 puts @games[input-1].name
@@ -74,6 +74,7 @@ class BoardGame::CLI
                 else
                     puts @games[input-1].minimum_age
                 end
+            
 
             elsif input == "list"
                 list_games
