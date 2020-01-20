@@ -1,4 +1,3 @@
-# https://drive.google.com/open?id=15xG3RZ7WIPIsdY5GKoAsRrIl1kQrihpY
 # https://meliajm.github.io/board_game_cli
 class BoardGame::CLI
 

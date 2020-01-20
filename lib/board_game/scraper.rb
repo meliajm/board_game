@@ -19,13 +19,13 @@ class BoardGame::Scraper
             all_descriptions = article.css("div._hawk.subtitle").text
             all_stats = article.css("p.specs__container").text
         end
-        a = all_stats.split(" | ")
+        all_stats = all_stats.split(" | ")
         stats_array = []
-        a.each do |a|
-            if a.include?('P')
-                stats_array << a.split('P')
+        all_stats.each do |stat|
+            if stat.include?('P')
+                stats_array << stat.split('P')
             else 
-                stats_array << a
+                stats_array << stat
             end
         end
         stats_array = stats_array.flatten
