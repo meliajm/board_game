@@ -35,11 +35,25 @@ class BoardGame::Scraper
         time_set = []
         time_play = []
         age = []
-        stats_array.each {|s| players << s if s[0..5] == "layers" }
-        stats_array.each {|s| diff << s if s[0..5] == "Diffic" || s[0..5] == "Comple"}
-        stats_array.each {|s| time_set << s if s[8] == "s"}
-        stats_array.each {|s| time_play << s if s[8] == "p"}
-        stats_array.each {|s| age << s if s[0..2] == "Age"}
+        stats_array.each do |s| 
+            if s[0..5] == "layers" 
+                players << s 
+            elsif s[0..5] == "Diffic" || s[0..5] == "Comple"
+                diff << s 
+            elsif s[8] == "s"
+                time_set << s 
+            elsif s[8] == "p"
+                time_play << s 
+            elsif s[0..2] == "Age"
+                age << s
+            end
+        end
+        # stats_array.each {|s| players << s if s[0..5] == "layers" }
+        # binding.pry
+        # stats_array.each {|s| diff << s if s[0..5] == "Diffic" || s[0..5] == "Comple"}
+        # stats_array.each {|s| time_set << s if s[8] == "s"}
+        # stats_array.each {|s| time_play << s if s[8] == "p"}
+        # stats_array.each {|s| age << s if s[0..2] == "Age"}
         all_names = all_names.split('. ')
         all_names = all_names.drop(1)
         all_descriptions = all_descriptions.split('T')
